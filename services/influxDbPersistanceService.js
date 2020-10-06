@@ -10,9 +10,10 @@ const writeApi = client.getWriteApi(process.env.INFLUX_ORGANIZATION, process.env
 
 async function saveMeasurement(measurement){
     const point = new Point('climate')
-        .tag('loc_x', measurement.loc_x)
-        .tag('loc_y', measurement.loc_y)
-        .tag('floor', measurement.floor)
+        .tag('loc_x', measurement.loc_x.toString())
+        .tag('loc_y', measurement.loc_y.toString())
+        .tag('floor', measurement.floor.toString())
+        .tag('is_valid', measurement.is_valid.toString())
         .floatField(measurement.parameter, measurement.value)
 
     writeApi.writePoint(point)
@@ -21,4 +22,3 @@ async function saveMeasurement(measurement){
 
 
 module.exports = {saveMeasurement}
-

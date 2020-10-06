@@ -1,9 +1,9 @@
-    
+
 let dbService = require('./influxDbPersistanceService')
 
 async function processSensorMessage(topic, message){
     // matches the topic format:
-    // humtemp/<floor>/<loc_x>/<loc_y>/sensor/[humidity|temperature]/state 
+    // humtemp/<floor>/<loc_x>/<loc_y>/sensor/[humidity|temperature]/state
     // using named capturing groups
     let match = /^humtemp\/(?<floor>\d+)\/(?<loc_x>\d+)\/(?<loc_y>\d+)\/sensor\/(?<parameter>humidity|temperature)\/state$/gm.exec(topic)
 
@@ -14,6 +14,9 @@ async function processSensorMessage(topic, message){
     let measurement = match.groups
     //and add the actual value of the measurement (temperature in degrees or the hummidity)
     measurement.value = message
+
+    //Default value for the is_valid field
+    measurement.is_valid = true
 
     //save the measurement in the database
     await dbService.saveMeasurement(measurement)
