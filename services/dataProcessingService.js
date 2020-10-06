@@ -1,5 +1,5 @@
     
-let dbService = require('./sqlPersistanceService')
+let dbService = require('./influxDbPersistanceService')
 
 async function processSensorMessage(topic, message){
     // matches the topic format:
