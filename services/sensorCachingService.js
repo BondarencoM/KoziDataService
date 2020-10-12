@@ -1,4 +1,3 @@
-//Declaring sensors and creating the function(s) for it
 var sensors = {}
 
 /**
@@ -7,7 +6,7 @@ var sensors = {}
  * @param {entry} entry The sensor entry that you want to add to the cache
  */
 function retrieveLastValue(entry) {
-    const key = getKey(entry);
+    const key = generateCacheKey(entry);
     if(sensors[key]){
         return sensors[key].value
     }
@@ -20,7 +19,7 @@ function retrieveLastValue(entry) {
  * @param {entry} entry The sensor entry that you want to add to the cache
  */
 function storeCurrentValue(entry){
-    sensors[getKey(entry)] = entry
+    sensors[generateCacheKey(entry)] = entry
 }
 
 /**
@@ -30,7 +29,7 @@ function storeCurrentValue(entry){
  */
 function getMaxTemp(floor){
     var highestTemp
-    for(var element of sensorsFromFloor(floor)){
+    for(var element of sensorTempraturesFromFloor(floor)){
         if(!highestTemp || element.value > highestTemp){
             highestTemp = element.value
         }
@@ -45,7 +44,7 @@ function getMaxTemp(floor){
  */
 function getMinTemp(floor){
     var lowestTemp
-    for(var element of sensorsFromFloor(floor)){
+    for(var element of sensorTempraturesFromFloor(floor)){
         if(!lowestTemp || element.value < lowestTemp){
             lowestTemp = element.value
         }
@@ -61,11 +60,12 @@ module.exports = {retrieveLastValue, storeCurrentValue, getMaxTemp, getMinTemp}
  * @author Lars
  * @param {entry} entry The whole sensor entry
  */
-function getKey(entry){
-    if(!entry.loc_x || !entry.loc_y || !entry.floor || !entry.parameter || !entry.value){
-        throw new Error('1 or more fields are missing')
-    }
-    return entry.loc_x+'-'+entry.loc_y+'-'+entry.floor+'-'+entry.parameter
+function generateCacheKey(entry){
+    if(entry.loc_x && entry.loc_y && entry.floor && entry.parameter && entry.value){
+        return `${entry.loc_x}-${entry.loc_y}-${entry.floor}-${entry.parameter}`
+   }
+  throw new Error('1 or more fields are missing')
+
 }
 
 /**
@@ -73,10 +73,10 @@ function getKey(entry){
  * @author Lars
  * @param {floor} floor
  */
-function sensorsFromFloor(floor){
+function sensorTempraturesFromFloor(floor){
     var returnValue = []
     for(const element in sensors){
-        if (sensors[element].floor == floor){
+        if (sensors[element].parameter == 'temprature' && sensors[element].floor == floor){
             returnValue.push(sensors[element])
         }
     }
