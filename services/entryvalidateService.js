@@ -1,18 +1,15 @@
 const sensorCachingService = require('./sensorCachingService');
 
 /**
- * 
+ * Checks the validation of the entry
+ * @author Onur Ereren
  * @param {Sensor Object} entry 
+ * @returns {boolean} Returns true if the entry is correct otherwise false.
  */
 function validateEntry(entry){
 
     return validateTemperature(entry) && validateTemperatureWithLastEntry(entry) && validateTemperatureWithHighestandLowest(entry)
 }
-
-
-
-
-
 
 
 /**

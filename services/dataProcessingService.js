@@ -18,7 +18,7 @@ async function processSensorMessage(topic, message){
 
  
 // Validation entry -> only temperature for now
- measurement.is_valid = validationService.validateTemperatureWithLastEntry(measurement)
+    measurement.is_valid = validationService.validateEntry(measurement)
 
     //Store the current value
     cacheService.storeCurrentValue(match)
