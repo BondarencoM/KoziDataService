@@ -1,5 +1,5 @@
-
 let dbService = require('./influxDbPersistanceService')
+const cacheService = require('./sensorCachingService')
 
 async function processSensorMessage(topic, message){
     // matches the topic format:
@@ -17,6 +17,9 @@ async function processSensorMessage(topic, message){
 
     //Default value for the is_valid field
     measurement.is_valid = true
+
+    //Store the current value
+    cacheService.storeCurrentValue(match)
 
     //save the measurement in the database
     await dbService.saveMeasurement(measurement)
