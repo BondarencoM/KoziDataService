@@ -1,6 +1,6 @@
-
 let dbService = require('./influxDbPersistanceService')
 const validationService = require('./validateService')
+const cacheService = require('./sensorCachingService')
 
 async function processSensorMessage(topic, message){
     // matches the topic format:
@@ -19,6 +19,9 @@ async function processSensorMessage(topic, message){
  
 // Validation entry -> only temperature for now
  measurement.is_valid = validationService.validateTemperature(measurement.parameter, measurement.value)
+
+    //Store the current value
+    cacheService.storeCurrentValue(match)
 
     //save the measurement in the database
     await dbService.saveMeasurement(measurement)
