@@ -1,45 +1,70 @@
 const { validateTemperature } = require("../services/validateService");
 const validateService = require("../services/validateService");
 
+beforeEach(() => {
+  entry ={
+    loc_x: 10,
+    loc_y: 15,
+    value: null,
+    parameter: "temperature"
+}
+});
+
+
 test('Checks the temperature for 15<x<45', () => {
-    expect(validateTemperature('temperature',24)).toBe(true);
+    entry.value = 24;
+    expect(validateTemperature(entry)).toBe(true);
 });
 
 test('Checks the temperature for x > 45', () => {
-    expect(validateTemperature('temperature', 65)).toBe(false);
+      entry.value = 65;
+    expect(validateTemperature(entry)).toBe(false);
 });
 
 test('Checks the temperature for x < 15', () => {
-    expect(validateTemperature('temperature', 12)).toBe(false);
+     entry.value = 11;
+    expect(validateTemperature(entry)).toBe(false);
 });
 
 
 test('Checks the temperature null', () => {
-    expect(validateTemperature('temperature', null)).toBe(false);
+     entry.value = null;;
+    expect(validateTemperature(entry)).toBe(false);
 });
 
 test('Checks the temperature undefined', () => {
-    expect(validateTemperature('temperature', undefined)).toBe(false);
+     entry.value = undefined;
+    expect(validateTemperature(entry)).toBe(false);
 });
 
 
 // Checking Humidity Field -> which is not affected by the value because we only testing temperature value
 test('Checks the humidity for x < 15', () => {
-    expect(validateTemperature('humidity', 12)).toBe(true);
+    entry.value = 11;
+    entry.parameter = "humidity";
+    expect(validateTemperature(entry)).toBe(true);
 });
 
 test('Checks the humidity for x > 45', () => {
-    expect(validateTemperature('humidity', 65)).toBe(true);
+    entry.value = 65;
+     entry.parameter = "humidity";
+    expect(validateTemperature(entry)).toBe(true);
 });
 
 test('Checks the humidity for 15<x<45', () => {
-    expect(validateTemperature('humidity', 32)).toBe(true);
+    entry.value = 24;
+     entry.parameter = "humidity";
+    expect(validateTemperature(entry)).toBe(true);
 });
 
 test('Checks the humidity for null', () => {
-    expect(validateTemperature('humidity', null)).toBe(true);
+    entry.value = null;
+     entry.parameter = "humidity";
+    expect(validateTemperature(entry)).toBe(true);
 });
 
 test('Checks the humidity for undefined', () => {
-    expect(validateTemperature('humidity', undefined)).toBe(true);
+    entry.value = undefined;
+     entry.parameter = "humidity";
+    expect(validateTemperature(entry)).toBe(true);
 });

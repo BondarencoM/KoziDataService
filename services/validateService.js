@@ -1,14 +1,30 @@
 
-//Checks temperature value of the entry
-function validateTemperature(fieldName, tempValue, is_valid) {
-    if (fieldName == 'temperature') {
+/**
+ * Checks the temperature of the entry.
+ * @author Onur Ereren
+ * @param {Sensor Object} entry 
+ * @returns {boolean} Returns true if the temperature is correct otherwise false.
+ */
+function validateTemperature(entry) {
+    if (entry.parameter == 'temperature') {
         //if temperature is not between 15<x<45 then return false
-        if (!(tempValue > 15 && tempValue < 45)) {
+        if (!(entry.value > 15 && entry.value < 45)) {
             return false;
         }
     }
  
     return true;
+}
+
+
+
+function validateTemperatureWithLastEntry(){
+
+}
+
+
+function validateTemperatureWithHighestandLowest(){
+
 }
 
 
