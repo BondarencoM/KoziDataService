@@ -76,7 +76,7 @@ function generateCacheKey(entry){
 function sensorTempraturesFromFloor(floor){
     var returnValue = []
     for(const element in sensors){
-        if (sensors[element].parameter == 'temprature' && sensors[element].floor == floor){
+        if (sensors[element].parameter == 'temperature' && sensors[element].floor == floor){
             returnValue.push(sensors[element])
         }
     }
