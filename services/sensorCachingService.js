@@ -1,7 +1,7 @@
 var sensors = {}
 
 /**
- *Retrieve the last known temprature/humidity form a specific sensor
+ *Retrieve the last known temperature/humidity form a specific sensor
  * @author Lars
  * @param {entry} entry The sensor entry that you want to add to the cache
  */
@@ -23,13 +23,13 @@ function storeCurrentValue(entry){
 }
 
 /**
- * Retrieve the maximum temprature/humidity for a specific floor.
+ * Retrieve the maximum temperature/humidity for a specific floor.
  * @author Lars
  * @param {floor} floor The floor you want to recieve the max temp of.
  */
 function getMaxTemp(floor){
     var highestTemp
-    for(var element of sensorTempraturesFromFloor(floor)){
+    for(var element of sensorTemperaturesFromFloor(floor)){
         if(!highestTemp || element.value > highestTemp){
             highestTemp = element.value
         }
@@ -38,13 +38,13 @@ function getMaxTemp(floor){
 }
 
 /**
- * Retrieve the minimum temprature/humidity for a specific floor.
+ * Retrieve the minimum temperature/humidity for a specific floor.
  * @author Lars
  * @param {floor} floor The floor you want to recieve the min temp of.
  */
 function getMinTemp(floor){
     var lowestTemp
-    for(var element of sensorTempraturesFromFloor(floor)){
+    for(var element of sensorTemperaturesFromFloor(floor)){
         if(!lowestTemp || element.value < lowestTemp){
             lowestTemp = element.value
         }
@@ -73,10 +73,10 @@ function generateCacheKey(entry){
  * @author Lars
  * @param {floor} floor
  */
-function sensorTempraturesFromFloor(floor){
+function sensorTemperaturesFromFloor(floor){
     var returnValue = []
     for(const element in sensors){
-        if (sensors[element].parameter == 'temprature' && sensors[element].floor == floor){
+        if (sensors[element].parameter == 'temperature' && sensors[element].floor == floor){
             returnValue.push(sensors[element])
         }
     }
