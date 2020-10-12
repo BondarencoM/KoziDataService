@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "clear_jest": "jest --clearCache"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
