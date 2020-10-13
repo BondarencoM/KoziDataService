@@ -6,7 +6,7 @@ const sensorCachingService = require('./sensorCachingService');
  * @param {Sensor Object} entry 
  * @returns {boolean} Returns true if the entry is correct otherwise false.
  */
-function validateEntry(entry){
+function validateEntry(entry) {
 
     return validateTemperature(entry) && validateTemperatureWithLastEntry(entry) && validateTemperatureWithHighestandLowest(entry)
 }
@@ -24,7 +24,7 @@ function validateTemperature(entry) {
             return false;
         }
     }
- 
+
     return true;
 }
 
@@ -35,17 +35,18 @@ function validateTemperature(entry) {
  * @param {Sensor Object} entry 
  * @returns {boolean} Returns true if the entry is correct otherwise false.
  */
-function validateTemperatureWithLastEntry(entry){
-if(entry.parameter == 'temperature'){
+function validateTemperatureWithLastEntry(entry) {
+    if (entry.parameter == 'temperature') {
 
 
-let oldTemp = sensorCachingService.retrieveLastValue(entry);
-if(oldTemp != null){
-    if(Math.abs(entry.value - oldTemp) > 2){
-        return false;
+        let oldTemp = sensorCachingService.retrieveLastValue(entry);
+        if (oldTemp != null) {
+            if (Math.abs(entry.value - oldTemp) > 2) {
+                return false;
+            }
+        }
     }
-}}
-return true;
+    return true;
 }
 
 
@@ -55,20 +56,20 @@ return true;
  * @param {Sensor Object} entry 
  * @returns {boolean} Returns true if the entry is correct otherwise false.
  */
-function validateTemperatureWithHighestandLowest(entry){
-if(entry.parameter == 'temperature'){
-let maxTemp = sensorCachingService.getMaxTemp(entry.floor);
-let minTemp = sensorCachingService.getMinTemp(entry.floor);
+function validateTemperatureWithHighestandLowest(entry) {
+    if (entry.parameter == 'temperature') {
+        let maxTemp = sensorCachingService.getMaxTemp(entry.floor);
+        let minTemp = sensorCachingService.getMinTemp(entry.floor);
 
 
-if((Math.abs(entry.value - maxTemp) > 3 && Math.sign(entry.value - maxTemp) == 1) || Math.abs(entry.value - minTemp) > 3 && Math.sign(entry.value - minTemp) == -1){
-    
-     return false;
-}
-}
+        if ((Math.abs(entry.value - maxTemp) > 3 && Math.sign(entry.value - maxTemp) == 1) || Math.abs(entry.value - minTemp) > 3 && Math.sign(entry.value - minTemp) == -1) {
+
+            return false;
+        }
+    }
 
 
-return true;
+    return true;
 }
 
 
