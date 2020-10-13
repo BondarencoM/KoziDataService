@@ -17,7 +17,8 @@ async function saveMeasurement(measurement){
         .floatField(measurement.parameter, measurement.value)
 
     writeApi.writePoint(point)
-
+    
+    
 }
 
 
