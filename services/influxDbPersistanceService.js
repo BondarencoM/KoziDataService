@@ -18,7 +18,7 @@ async function saveMeasurement(measurement){
         .floatField(measurement.parameter, measurement.value)
 
     writeApi.writePoint(point)
-    writeApi.flush();
+     
 }
 
 function getSensorEntries(location, start = '-5m', end = '0m'){
