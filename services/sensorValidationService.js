@@ -1,4 +1,4 @@
-const { getSensorEntries } = require("./influxDbPersistanceService")
+const { getSensorEntries } = require('./influxDbPersistanceService')
 
 /**
  * Acknowledges a faulty entry and returns false if the associated sensor should be considered faulty otherwise true
