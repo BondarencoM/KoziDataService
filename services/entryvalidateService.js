@@ -7,10 +7,8 @@ const sensorCachingService = require('./sensorCachingService');
  * @returns {boolean} Returns true if the entry is correct otherwise false.
  */
 function validateEntry(entry) {
-
     return validateTemperature(entry) && validateTemperatureWithLastEntry(entry) && validateTemperatureWithHighestandLowest(entry)
 }
-
 
 /**
  * Checks the temperature of the entry.
@@ -24,10 +22,8 @@ function validateTemperature(entry) {
             return false;
         }
     }
-
     return true;
 }
-
 
 /**
  * Checks the current and the last temperature
@@ -37,8 +33,6 @@ function validateTemperature(entry) {
  */
 function validateTemperatureWithLastEntry(entry) {
     if (entry.parameter == 'temperature') {
-
-
         let oldTemp = sensorCachingService.retrieveLastValue(entry);
         if (oldTemp != null) {
             if (Math.abs(entry.value - oldTemp) > 2) {
@@ -48,7 +42,6 @@ function validateTemperatureWithLastEntry(entry) {
     }
     return true;
 }
-
 
 /**
  * Checks if the temperature is 3 degrees higher than the highest valid entry or 3 degrees lower than the lowest.
@@ -60,19 +53,12 @@ function validateTemperatureWithHighestandLowest(entry) {
     if (entry.parameter == 'temperature') {
         let maxTemp = sensorCachingService.getMaxTemp(entry.floor);
         let minTemp = sensorCachingService.getMinTemp(entry.floor);
-
-
         if ((Math.abs(entry.value - maxTemp) > 3 && Math.sign(entry.value - maxTemp) == 1) || Math.abs(entry.value - minTemp) > 3 && Math.sign(entry.value - minTemp) == -1) {
-
             return false;
         }
     }
-
-
     return true;
 }
-
-
 
 module.exports = {
     validateTemperature,
