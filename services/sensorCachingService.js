@@ -64,7 +64,7 @@ function generateCacheKey(entry){
     if(entry.loc_x && entry.loc_y && entry.floor && entry.parameter && entry.value){
         return `${entry.loc_x}-${entry.loc_y}-${entry.floor}-${entry.parameter}`
    }
-  throw new Error('1 or more fields are missing')
+  throw new Error('1 or more fields are missing in: \n' + JSON.stringify(entry))
 
 }
 
