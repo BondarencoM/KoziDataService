@@ -23,7 +23,7 @@ async function processSensorMessage(topic, message){
 
     if(measurement.is_valid){
         //Store valid measurements into cache
-        cacheService.storeCurrentValue(match)
+        cacheService.storeCurrentValue(measurement)
     }else{
         //Report faulty entry because the sensor may be faulty
         sensorValidationService.reportFaultyMeasurement(measurement)

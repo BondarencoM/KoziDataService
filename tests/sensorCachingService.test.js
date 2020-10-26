@@ -30,7 +30,7 @@ test('Invalid argument should throw exeption', () => {
     delete entry.floor
     expect(() =>{
         dataProcessing.retrieveLastValue(entry)
-    }).toThrow(new Error('1 or more fields are missing'))
+    }).toThrow(/1 or more fields are missing/)
 })
 
 test('Retrieve the max temperature of floor 3', () => {
