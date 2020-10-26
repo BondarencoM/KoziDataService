@@ -22,37 +22,39 @@ function storeCurrentValue(entry){
     sensors[generateCacheKey(entry)] = entry
 }
 
-/**
- * Retrieve the maximum temperature/humidity for a specific floor.
- * @author Lars
- * @param {floor} floor The floor you want to recieve the max temp of.
- */
-function getMaxTemp(floor){
-    var highestTemp
-    for(var element of sensorTemperaturesFromFloor(floor)){
-        if(!highestTemp || element.value > highestTemp){
-            highestTemp = element.value
-        }
-    }
-    return highestTemp
-}
+//This function is disables for now
+// /**
+//  * Retrieve the maximum temperature/humidity for a specific floor.
+//  * @author Lars
+//  * @param {floor} floor The floor you want to recieve the max temp of.
+//  */
+// function getMaxTemp(floor){
+//     var highestTemp
+//     for(var element of sensorTemperaturesFromFloor(floor)){
+//         if(!highestTemp || element.value > highestTemp){
+//             highestTemp = element.value
+//         }
+//     }
+//     return highestTemp
+// }
 
-/**
- * Retrieve the minimum temperature/humidity for a specific floor.
- * @author Lars
- * @param {floor} floor The floor you want to recieve the min temp of.
- */
-function getMinTemp(floor){
-    var lowestTemp
-    for(var element of sensorTemperaturesFromFloor(floor)){
-        if(!lowestTemp || element.value < lowestTemp){
-            lowestTemp = element.value
-        }
-    }
-    return lowestTemp
-}
+//This function is disables for now
+// /**
+//  * Retrieve the minimum temperature/humidity for a specific floor.
+//  * @author Lars
+//  * @param {floor} floor The floor you want to recieve the min temp of.
+//  */
+// function getMinTemp(floor){
+//     var lowestTemp
+//     for(var element of sensorTemperaturesFromFloor(floor)){
+//         if(!lowestTemp || element.value < lowestTemp){
+//             lowestTemp = element.value
+//         }
+//     }
+//     return lowestTemp
+// }
 
-module.exports = {retrieveLastValue, storeCurrentValue, getMaxTemp, getMinTemp}
+module.exports = {retrieveLastValue, storeCurrentValue}
 
 
 /**

@@ -75,7 +75,7 @@ describe('Tests when uptime of server is > 5min', () => {
     test('Report first faulty entry results in false', async () => {
 
         getSensorEntries.mockResolvedValue([])
-    
+
         expect(await service.reportFaultyMeasurement(sampleInvalidEntry)).toBe(false)
     })
 
@@ -87,28 +87,28 @@ describe('Tests when uptime of server is > 5min', () => {
             {is_valid: 'true'},
             {is_valid: 'true'},
         ])
-    
+
         expect(await service.reportFaultyMeasurement(sampleInvalidEntry)).toBe(false)
     })
 
     test('one faulty entry + 18 valid entries results in false', async () => {
 
         getSensorEntries.mockResolvedValue(new Array(18).fill({is_valid: 'true'}))
-    
+
         expect(await service.reportFaultyMeasurement(sampleInvalidEntry)).toBe(false)
     })
 
     test('one faulty entry + 19 valid entries results in true', async () => {
 
         getSensorEntries.mockResolvedValue(new Array(19).fill({is_valid: 'true'}))
-    
+
         expect(await service.reportFaultyMeasurement(sampleInvalidEntry)).toBe(true)
     })
 
     test('one faulty entry + 20 valid entries results in true', async () => {
 
         getSensorEntries.mockResolvedValue(new Array(20).fill({is_valid: 'true'}))
-    
+
         expect(await service.reportFaultyMeasurement(sampleInvalidEntry)).toBe(true)
     })
 
@@ -118,7 +118,7 @@ describe('Tests when uptime of server is > 5min', () => {
         EntryCacheMock.push({is_valid: false})
 
         getSensorEntries.mockResolvedValue(EntryCacheMock)
-    
+
         expect(await service.reportFaultyMeasurement(sampleInvalidEntry)).toBe(false)
     })
 })
