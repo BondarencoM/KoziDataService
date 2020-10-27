@@ -1,7 +1,6 @@
 const {
     validateTemperature,
     validateTemperatureWithLastEntry,
-    validateTemperatureWithHighestandLowest,
     validateEntry
 } = require("../services/entryvalidateService");
 const sensorCachingService = require("../services/sensorCachingService");
@@ -118,125 +117,124 @@ test('Checks if the temperature has risen or fallen more than 2 degrees since la
 
 
 
-// Checks the method of validateTemperatureWithHighestandLowest 
-test('Checks if the temperature is not 3 degrees higher than the highest valid entry.', () => {
+// Checks the method of validateTemperatureWithHighestandLowest -- Deleted for now
+// test('Checks if the temperature is not 3 degrees higher than the highest valid entry.', () => {
 
-    createSomeFakeData(1, 2, 3, 20, 'temperature')
-    createSomeFakeData(1, 3, 3, 21, 'temperature')
-    createSomeFakeData(1, 4, 3, 22, 'temperature')
-    createSomeFakeData(1, 5, 3, 23, 'temperature')
-    createSomeFakeData(1, 6, 3, 24, 'temperature')
-    createSomeFakeData(1, 7, 3, 25, 'temperature')
-    entry.value = 20
+//     createSomeFakeData(1, 2, 3, 20, 'temperature')
+//     createSomeFakeData(1, 3, 3, 21, 'temperature')
+//     createSomeFakeData(1, 4, 3, 22, 'temperature')
+//     createSomeFakeData(1, 5, 3, 23, 'temperature')
+//     createSomeFakeData(1, 6, 3, 24, 'temperature')
+//     createSomeFakeData(1, 7, 3, 25, 'temperature')
+//     entry.value = 20
 
-    expect(validateTemperatureWithHighestandLowest(entry)).toBe(true);
+//     expect(validateTemperatureWithHighestandLowest(entry)).toBe(true);
 
-});
+// });
 
+// test('Checks if the temperature is 3 degrees higher than the highest valid entry.', () => {
 
-test('Checks if the temperature is 3 degrees higher than the highest valid entry.', () => {
+//     createSomeFakeData(1, 2, 3, 20, 'temperature')
+//     createSomeFakeData(1, 3, 3, 21, 'temperature')
+//     createSomeFakeData(1, 4, 3, 22, 'temperature')
+//     createSomeFakeData(1, 5, 3, 23, 'temperature')
+//     createSomeFakeData(1, 6, 3, 24, 'temperature')
+//     createSomeFakeData(1, 7, 3, 25, 'temperature')
+//     entry.value = 35
 
-    createSomeFakeData(1, 2, 3, 20, 'temperature')
-    createSomeFakeData(1, 3, 3, 21, 'temperature')
-    createSomeFakeData(1, 4, 3, 22, 'temperature')
-    createSomeFakeData(1, 5, 3, 23, 'temperature')
-    createSomeFakeData(1, 6, 3, 24, 'temperature')
-    createSomeFakeData(1, 7, 3, 25, 'temperature')
-    entry.value = 35
+//     expect(validateTemperatureWithHighestandLowest(entry)).toBe(false);
 
-    expect(validateTemperatureWithHighestandLowest(entry)).toBe(false);
-
-});
-
-
-test('Checks if the temperature is 3 degrees lower than the lowest entry.', () => {
-
-    createSomeFakeData(1, 2, 3, 20, 'temperature')
-    createSomeFakeData(1, 3, 3, 21, 'temperature')
-    createSomeFakeData(1, 4, 3, 22, 'temperature')
-    createSomeFakeData(1, 5, 3, 23, 'temperature')
-    createSomeFakeData(1, 6, 3, 24, 'temperature')
-    createSomeFakeData(1, 7, 3, 25, 'temperature')
-    entry.value = 15
-
-    expect(validateTemperatureWithHighestandLowest(entry)).toBe(false);
-
-});
-
-test('Checks if the temperature is not 3 degrees lower than the lowest entry.', () => {
-
-    createSomeFakeData(1, 2, 3, 20, 'temperature')
-    createSomeFakeData(1, 3, 3, 21, 'temperature')
-    createSomeFakeData(1, 4, 3, 22, 'temperature')
-    createSomeFakeData(1, 5, 3, 23, 'temperature')
-    createSomeFakeData(1, 6, 3, 24, 'temperature')
-    createSomeFakeData(1, 7, 3, 25, 'temperature')
-    entry.value = 18
-
-    expect(validateTemperatureWithHighestandLowest(entry)).toBe(true);
-
-});
+// });
 
 
-test('Checks if the temperature is not 3 degrees higher than the highest valid entry. mixed with humidity', () => {
+// test('Checks if the temperature is 3 degrees lower than the lowest entry.', () => {
 
-    createSomeFakeData(2, 2, 4, 20, 'humidity')
-    createSomeFakeData(2, 3, 4, 21, 'humidity')
-    createSomeFakeData(2, 4, 4, 22, 'temperature')
-    createSomeFakeData(2, 5, 4, 23, 'temperature')
-    createSomeFakeData(2, 6, 4, 24, 'temperature')
-    createSomeFakeData(2, 7, 4, 25, 'humidity')
-    entry.floor = 4
-    entry.value = 27
+//     createSomeFakeData(1, 2, 3, 20, 'temperature')
+//     createSomeFakeData(1, 3, 3, 21, 'temperature')
+//     createSomeFakeData(1, 4, 3, 22, 'temperature')
+//     createSomeFakeData(1, 5, 3, 23, 'temperature')
+//     createSomeFakeData(1, 6, 3, 24, 'temperature')
+//     createSomeFakeData(1, 7, 3, 25, 'temperature')
+//     entry.value = 15
 
-    expect(validateTemperatureWithHighestandLowest(entry)).toBe(true);
+//     expect(validateTemperatureWithHighestandLowest(entry)).toBe(false);
 
-});
+// });
 
-test('Checks if the temperature is 3 degrees higher than the highest valid entry. mixed with humidity', () => {
+// test('Checks if the temperature is not 3 degrees lower than the lowest entry.', () => {
 
-    createSomeFakeData(2, 2, 4, 20, 'humidity')
-    createSomeFakeData(2, 3, 4, 21, 'humidity')
-    createSomeFakeData(2, 4, 4, 22, 'temperature')
-    createSomeFakeData(2, 5, 4, 23, 'temperature')
-    createSomeFakeData(2, 6, 4, 24, 'temperature')
-    createSomeFakeData(2, 7, 4, 25, 'humidity')
-    entry.floor = 4
-    entry.value = 28
+//     createSomeFakeData(1, 2, 3, 20, 'temperature')
+//     createSomeFakeData(1, 3, 3, 21, 'temperature')
+//     createSomeFakeData(1, 4, 3, 22, 'temperature')
+//     createSomeFakeData(1, 5, 3, 23, 'temperature')
+//     createSomeFakeData(1, 6, 3, 24, 'temperature')
+//     createSomeFakeData(1, 7, 3, 25, 'temperature')
+//     entry.value = 18
 
-    expect(validateTemperatureWithHighestandLowest(entry)).toBe(false);
+//     expect(validateTemperatureWithHighestandLowest(entry)).toBe(true);
 
-});
+// });
 
-test('Checks if the temperature is not 3 degrees lower than the lowest entry. mixed with humidity', () => {
 
-    createSomeFakeData(2, 2, 4, 20, 'humidity')
-    createSomeFakeData(2, 3, 4, 21, 'humidity')
-    createSomeFakeData(2, 4, 4, 22, 'temperature')
-    createSomeFakeData(2, 5, 4, 23, 'temperature')
-    createSomeFakeData(2, 6, 4, 24, 'temperature')
-    createSomeFakeData(2, 7, 4, 25, 'humidity')
-    entry.floor = 4
-    entry.value = 19
+// test('Checks if the temperature is not 3 degrees higher than the highest valid entry. mixed with humidity', () => {
 
-    expect(validateTemperatureWithHighestandLowest(entry)).toBe(true);
+//     createSomeFakeData(2, 2, 4, 20, 'humidity')
+//     createSomeFakeData(2, 3, 4, 21, 'humidity')
+//     createSomeFakeData(2, 4, 4, 22, 'temperature')
+//     createSomeFakeData(2, 5, 4, 23, 'temperature')
+//     createSomeFakeData(2, 6, 4, 24, 'temperature')
+//     createSomeFakeData(2, 7, 4, 25, 'humidity')
+//     entry.floor = 4
+//     entry.value = 27
 
-});
+//     expect(validateTemperatureWithHighestandLowest(entry)).toBe(true);
 
-test('Checks if the temperature is not 3 degrees lower than the lowest entry. mixed with humidity', () => {
+// });
 
-    createSomeFakeData(2, 2, 4, 20, 'humidity')
-    createSomeFakeData(2, 3, 4, 21, 'humidity')
-    createSomeFakeData(2, 4, 4, 22, 'temperature')
-    createSomeFakeData(2, 5, 4, 23, 'temperature')
-    createSomeFakeData(2, 6, 4, 24, 'temperature')
-    createSomeFakeData(2, 7, 4, 25, 'humidity')
-    entry.floor = 4
-    entry.value = 18
+// test('Checks if the temperature is 3 degrees higher than the highest valid entry. mixed with humidity', () => {
 
-    expect(validateTemperatureWithHighestandLowest(entry)).toBe(false);
+//     createSomeFakeData(2, 2, 4, 20, 'humidity')
+//     createSomeFakeData(2, 3, 4, 21, 'humidity')
+//     createSomeFakeData(2, 4, 4, 22, 'temperature')
+//     createSomeFakeData(2, 5, 4, 23, 'temperature')
+//     createSomeFakeData(2, 6, 4, 24, 'temperature')
+//     createSomeFakeData(2, 7, 4, 25, 'humidity')
+//     entry.floor = 4
+//     entry.value = 28
 
-});
+//     expect(validateTemperatureWithHighestandLowest(entry)).toBe(false);
+
+// });
+
+// test('Checks if the temperature is not 3 degrees lower than the lowest entry. mixed with humidity', () => {
+
+//     createSomeFakeData(2, 2, 4, 20, 'humidity')
+//     createSomeFakeData(2, 3, 4, 21, 'humidity')
+//     createSomeFakeData(2, 4, 4, 22, 'temperature')
+//     createSomeFakeData(2, 5, 4, 23, 'temperature')
+//     createSomeFakeData(2, 6, 4, 24, 'temperature')
+//     createSomeFakeData(2, 7, 4, 25, 'humidity')
+//     entry.floor = 4
+//     entry.value = 19
+
+//     expect(validateTemperatureWithHighestandLowest(entry)).toBe(true);
+
+// });
+
+// test('Checks if the temperature is not 3 degrees lower than the lowest entry. mixed with humidity', () => {
+
+//     createSomeFakeData(2, 2, 4, 20, 'humidity')
+//     createSomeFakeData(2, 3, 4, 21, 'humidity')
+//     createSomeFakeData(2, 4, 4, 22, 'temperature')
+//     createSomeFakeData(2, 5, 4, 23, 'temperature')
+//     createSomeFakeData(2, 6, 4, 24, 'temperature')
+//     createSomeFakeData(2, 7, 4, 25, 'humidity')
+//     entry.floor = 4
+//     entry.value = 18
+
+//     expect(validateTemperatureWithHighestandLowest(entry)).toBe(false);
+
+// });
 
 // Checks for the method of validateEntry
 test('Validates the entry with correct values', () => {
@@ -283,49 +281,51 @@ test('Validates the entry with wrong last value', () => {
 
 });
 
-test('Validates the entry -> value exceeds highest temperature', () => {
+//Deleted for now
+// test('Validates the entry -> value exceeds highest temperature', () => {
 
-    createSomeFakeData(11, 11, 5, 20, 'humidity')
-    createSomeFakeData(11, 12, 5, 21, 'humidity')
-    createSomeFakeData(11, 13, 5, 22, 'temperature')
-    createSomeFakeData(11, 14, 5, 23, 'temperature')
-    createSomeFakeData(11, 15, 5, 24, 'temperature')
-    createSomeFakeData(11, 16, 5, 25, 'humidity')
-
-
-    newentry = {
-        loc_x: 14,
-        loc_y: 15,
-        floor: 5,
-        value: 28,
-        parameter: "temperature"
-    }
-
-    expect(validateEntry(newentry)).toBe(false);
-
-});
-
-test('Validates the entry -> value is lower than the lowest', () => {
-
-    createSomeFakeData(12, 11, 5, 20, 'humidity')
-    createSomeFakeData(12, 12, 5, 21, 'humidity')
-    createSomeFakeData(12, 13, 5, 22, 'temperature')
-    createSomeFakeData(12, 14, 5, 23, 'temperature')
-    createSomeFakeData(12, 15, 5, 24, 'temperature')
-    createSomeFakeData(12, 16, 5, 25, 'humidity')
+//     createSomeFakeData(11, 11, 5, 20, 'humidity')
+//     createSomeFakeData(11, 12, 5, 21, 'humidity')
+//     createSomeFakeData(11, 13, 5, 22, 'temperature')
+//     createSomeFakeData(11, 14, 5, 23, 'temperature')
+//     createSomeFakeData(11, 15, 5, 24, 'temperature')
+//     createSomeFakeData(11, 16, 5, 25, 'humidity')
 
 
-    newentry = {
-        loc_x: 17,
-        loc_y: 15,
-        floor: 5,
-        value: 18,
-        parameter: "temperature"
-    }
+//     newentry = {
+//         loc_x: 14,
+//         loc_y: 15,
+//         floor: 5,
+//         value: 28,
+//         parameter: "temperature"
+//     }
 
-    expect(validateEntry(newentry)).toBe(false);
+//     expect(validateEntry(newentry)).toBe(false);
 
-});
+// });
+
+//Deleted for now
+// test('Validates the entry -> value is lower than the lowest', () => {
+
+//     createSomeFakeData(12, 11, 5, 20, 'humidity')
+//     createSomeFakeData(12, 12, 5, 21, 'humidity')
+//     createSomeFakeData(12, 13, 5, 22, 'temperature')
+//     createSomeFakeData(12, 14, 5, 23, 'temperature')
+//     createSomeFakeData(12, 15, 5, 24, 'temperature')
+//     createSomeFakeData(12, 16, 5, 25, 'humidity')
+
+
+//     newentry = {
+//         loc_x: 17,
+//         loc_y: 15,
+//         floor: 5,
+//         value: 18,
+//         parameter: "temperature"
+//     }
+
+//     expect(validateEntry(newentry)).toBe(false);
+
+// });
 
 test('Validates the entry with wrong temperature value = 105', () => {
 

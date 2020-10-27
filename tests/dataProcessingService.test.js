@@ -80,17 +80,17 @@ test('Ignore invalid topics', ()=>{
         'humtemp/11/5/-10/sensor/temperature/state',
         'humtemp/11.5/5/-10/sensor/temperature/state',
 
-    ] 
+    ]
 
     for (topic of invalidTopcis){
         service.processSensorMessage(topic, 30)
     }
-    
+
     expect(validateEntry.mock.calls.length).toBe(0)
     expect(storeCurrentValue.mock.calls.length).toBe(0)
     expect(reportFaultyMeasurement.mock.calls.length).toBe(0)
     expect(saveMeasurement.mock.calls.length).toBe(0)
-    
+
 })
 
 test('Processing invalid entry', ()=>{
