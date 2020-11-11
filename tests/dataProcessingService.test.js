@@ -2,6 +2,7 @@ jest.mock('../services/influxDbPersistanceService')
 jest.mock('../services/entryvalidateService')
 jest.mock('../services/sensorCachingService')
 jest.mock('../services/sensorValidationService')
+jest.mock('../services/mongoPersistanceService.js')
 jest.mock('@influxdata/influxdb-client')
 
 const service = require('../services/dataProcessingService');
@@ -10,6 +11,7 @@ const {validateEntry} = require('../services/entryvalidateService')
 const {reportFaultyMeasurement} = require('../services/sensorValidationService')
 const {saveMeasurement} = require('../services/influxDbPersistanceService')
 const {storeCurrentValue} = require('../services/sensorCachingService')
+const {saveFaultySensor} = require('../services/mongoPersistanceService.js')
 
 let sampleTopic;
 
@@ -45,10 +47,10 @@ test('Processing valid entry', ()=>{
     expect(storeCurrentValue).toHaveBeenCalledWith(expectedMeasurement)
     expect(reportFaultyMeasurement.mock.calls.length).toBe(0)
     expect(saveMeasurement).toHaveBeenCalledWith(expectedMeasurement)
+    expect(saveFaultySensor.mock.calls.length).toBe(0)
 })
 
 test('Ignore invalid topics', ()=>{
-
 
     let invalidTopcis = [
         null,
@@ -93,7 +95,7 @@ test('Ignore invalid topics', ()=>{
 
 })
 
-test('Processing invalid entry', ()=>{
+test('Processing invalid entry', async ()=> {
 
     let expectedMeasurement = {
         floor: '11',
@@ -104,13 +106,15 @@ test('Processing invalid entry', ()=>{
         is_valid: false,
     }
 
-    validateEntry.mockReturnValueOnce(false);
+    validateEntry.mockReturnValueOnce(false)
+    reportFaultyMeasurement.mockReturnValueOnce(false)
 
-    service.processSensorMessage(sampleTopic, 300)
+    await service.processSensorMessage(sampleTopic, 300)
 
     expect(validateEntry).toHaveBeenCalledWith(expectedMeasurement)
     expect(storeCurrentValue.mock.calls.length).toBe(0)
     expect(reportFaultyMeasurement).toHaveBeenCalledWith(expectedMeasurement)
+    expect(saveFaultySensor).toHaveBeenCalledWith(expectedMeasurement)
     expect(saveMeasurement).toHaveBeenCalledWith(expectedMeasurement)
 })
 
