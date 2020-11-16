@@ -1,4 +1,6 @@
-let dbService = require('./influxDbPersistanceService')
+const measurementsDb = require('./influxDbPersistanceService')
+const persistantDb = require('./mongoPersistanceService')
+
 const validationService = require('./entryvalidateService')
 const cacheService = require('./sensorCachingService')
 const sensorValidationService = require('./sensorValidationService')
@@ -26,11 +28,14 @@ async function processSensorMessage(topic, message){
         cacheService.storeCurrentValue(measurement)
     }else{
         //Report faulty entry because the sensor may be faulty
-        sensorValidationService.reportFaultyMeasurement(measurement)
+        const sensorValidity = await sensorValidationService.reportFaultyMeasurement(measurement)
+        if(sensorValidity == false){
+            await persistantDb.saveFaultySensor(measurement)
+        }
     }
 
     //save the measurement in the database
-    await dbService.saveMeasurement(measurement)
+    await measurementsDb.saveMeasurement(measurement)
 
     console.log('Saved topic: ' + topic + ' saved')
 }

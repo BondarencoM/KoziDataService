@@ -11,10 +11,12 @@
   "dependencies": {
     "@influxdata/influxdb-client": "^1.6.0",
     "dotenv": "^8.2.0",
+    "mongoose": "^5.10.13",
     "mqtt": "^4.2.1",
     "mssql": "^6.2.2"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.3",
     "jest": "^26.5.3"
   }
 }
