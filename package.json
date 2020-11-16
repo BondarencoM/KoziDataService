@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@influxdata/influxdb-client": "^1.6.0",
     "dotenv": "^8.2.0",
-    "mqtt": "^4.2.1"
+    "mqtt": "^4.2.1",
+    "mssql": "^6.2.2"
+  },
+  "devDependencies": {
+    "jest": "^26.5.3"
   }
 }
