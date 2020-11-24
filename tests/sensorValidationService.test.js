@@ -1,8 +1,8 @@
 jest.mock('../services/influxDbPersistanceService')
 jest.mock('@influxdata/influxdb-client')
 
+const SensorFault = require('../models/SensortFault')
 const {getSensorEntries} = require('../services/influxDbPersistanceService')
-
 const service = require('../services/sensorValidationService')
 
 
@@ -12,6 +12,8 @@ beforeAll(() =>{
     sampleInvalidEntry ={
         loc_x: 10,
         loc_y: 10,
+        fault_code: 'ERROR_TEMPERATURE_OUT_OF_RANGE',
+        fault_value:{old_value: 5, new_value:10},
         floor: 11,
     }
 })

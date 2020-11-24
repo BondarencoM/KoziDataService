@@ -1,5 +1,9 @@
 const { getSensorEntries } = require('./influxDbPersistanceService')
-
+const {
+    validateTemperature,
+    validateTemperatureWithLastEntry,
+} = require("../services/entryvalidateService");
+const {retrieveLastValue} = require('./sensorCachingService');
 /**
  * Acknowledges a faulty entry and returns false if the associated sensor should be considered faulty otherwise true
  * @param {{loc_x: number, loc_y: number, floor: number}} measurement the measuremnt that is considered falses
@@ -32,4 +36,32 @@ function notEnoughValidEntries(counter){
 // 5 minutes = 5 min * 60 sec * 10^9 nanosec
 function IsServerUpFor5Minutes(){ return process.uptime() > 5 * 60 * 1e+9}
 
-module.exports = {reportFaultyMeasurement}
+/**
+ * @description Storing inforamtion about why sensor is faulty
+ * @param {Sensor Object} entry
+ * @returns {Sensor Object} based on fault
+ */
+function reasonForFaulty(entry) {
+    let oldTemp = retrieveLastValue(entry);
+    if (entry.parameter == 'temperature') {
+        if (validateTemperature(entry) == false) {
+            entry.fault_code = 'ERROR_TEMPERATURE_OUT_OF_RANGE'
+           var values = {
+               old_value: parseInt(oldTemp),
+               new_value: parseInt(entry.value)
+           }
+            entry.fault_value = values
+            return entry
+        } else if (validateTemperatureWithLastEntry(entry) == false) {
+            entry.fault_code = 'ERROR_TEMPERATURE_DIFFERENCE_MORE_THAN_2_CELSIUS'
+            var values = {
+                old_value: parseInt(oldTemp),
+                new_value: parseInt(entry.value)
+            }
+            entry.fault_value = values
+            return entry
+        }
+    }
+}
+
+module.exports = {reportFaultyMeasurement,reasonForFaulty}
