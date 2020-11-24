@@ -1,7 +1,7 @@
 jest.mock('../services/influxDbPersistanceService')
 jest.mock('@influxdata/influxdb-client')
 
-const SensorFault = require('../models/SensortFault')
+const SensorFault = require('../models/SensorFault')
 const {getSensorEntries} = require('../services/influxDbPersistanceService')
 const service = require('../services/sensorValidationService')
 

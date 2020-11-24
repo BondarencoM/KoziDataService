@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const SensorFault = require('../models/SensortFault')
+const SensorFault = require('../models/SensorFault')
 const {saveFaultySensor} = require("../services/mongoPersistanceService")
 
 beforeAll(async () => {
