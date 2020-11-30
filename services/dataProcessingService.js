@@ -31,7 +31,6 @@ async function processSensorMessage(topic, message){
         //Report faulty entry because the sensor may be faulty
         const sensorValidity = await sensorValidationService.reportFaultyMeasurement(measurement)
         if(sensorValidity == false){
-            //measurement = sensorValidationService.reasonForFaulty(measurement)
             await persistantDb.saveFaultySensor(measurement)
         }
     }

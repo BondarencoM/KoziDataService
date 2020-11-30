@@ -8,10 +8,11 @@ jest.mock('@influxdata/influxdb-client')
 const service = require('../services/dataProcessingService');
 
 const {validateEntry} = require('../services/entryvalidateService')
-const {reportFaultyMeasurement} = require('../services/sensorValidationService')
+const {reportFaultyMeasurement,reasonForFaulty} = require('../services/sensorValidationService')
 const {saveMeasurement} = require('../services/influxDbPersistanceService')
 const {storeCurrentValue} = require('../services/sensorCachingService')
 const {saveFaultySensor} = require('../services/mongoPersistanceService.js')
+
 
 let sampleTopic;
 
@@ -108,7 +109,6 @@ test('Processing invalid entry', async ()=> {
 
     validateEntry.mockReturnValueOnce(false)
     reportFaultyMeasurement.mockReturnValueOnce(false)
-
     await service.processSensorMessage(sampleTopic, 300)
 
     expect(validateEntry).toHaveBeenCalledWith(expectedMeasurement)
