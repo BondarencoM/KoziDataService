@@ -14,7 +14,6 @@ beforeAll(() =>{
         loc_x: 10,
         loc_y: 10,
         fault_code: 'ERROR_TEMPERATURE_OUT_OF_RANGE',
-        fault_value:{old_value: 5, new_value:10},
         floor: 11,
         parameter:'temperature',
         value: null
