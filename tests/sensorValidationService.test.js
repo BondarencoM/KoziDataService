@@ -127,7 +127,7 @@ describe('Tests when uptime of server is > 5min', () => {
     })
 })
 
-test('test fault code for temperature < 8',() => {
+test('test fault code for temperature < 15',() => {
 
     let counter = {
         true: 19,
