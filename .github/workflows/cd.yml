@@ -1,0 +1,24 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+
+jobs:
+  dockerize:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build image
+      run: docker build . --file Dockerfile 
+
+    - name: Log into registry
+      run: docker login -u ${{ github.user }} -p @{{secret.github.password}}
+
+    -name: Push to repository
+      run: docker push molotovhammr/kozidataservice:latest
