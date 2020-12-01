@@ -20,7 +20,6 @@ beforeEach(async () => {
         loc_y: 15,
         floor: 3,
         fault_code: 'ERROR_TEMPERATURE_OUT_OF_RANGE',
-        fault_value:{old_value: 5, new_value:10},
         value: null,
         parameter: "temperature"
     }
@@ -28,8 +27,8 @@ beforeEach(async () => {
 
 test('saveFaultySensor saves sensor fault', async () => {
     const actual = await saveFaultySensor(entry)
-    const expected = await SensorFault.findOne({ loc_x: 10, loc_y: 15, fault_code:'ERROR_TEMPERATURE_OUT_OF_RANGE' ,fault_value:{old_value: 5, new_value:10}, floor: 3})
-    const keysToCheck = ['loc_x', 'loc_y', 'floor', 'fault_code', 'fault_value' , 'timestamp', 'id']
+    const expected = await SensorFault.findOne({ loc_x: 10, loc_y: 15, fault_code:'ERROR_TEMPERATURE_OUT_OF_RANGE' , floor: 3})
+    const keysToCheck = ['loc_x', 'loc_y', 'floor', 'fault_code', 'timestamp', 'id']
     keysToCheck.forEach( key => expect(actual[key]).toEqual(expected[key]))
 })
 
@@ -51,8 +50,4 @@ test('saveFaultySensor validates floor as required', () => {
 test('saveFaultySensor validates fault_code as required', () => {
     delete entry.fault_code
     return expect(saveFaultySensor(entry)).rejects.toThrow(/validation failed.*fault_code.*is required.*/i);
-})
-test('saveFaultySensor validates fault_value as required', () => {
-    delete entry.fault_value
-    return expect(saveFaultySensor(entry)).rejects.toThrow(/validation failed.*fault_value.*is required.*/i);
 })

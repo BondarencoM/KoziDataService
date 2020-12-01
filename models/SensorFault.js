@@ -20,13 +20,6 @@ const sensorFaultSchema = new Schema({
         type: String,
         required: true
     },
-    fault_value:{
-        type :{
-            old_value: {type: Number},
-            new_value: {type:Number}
-        },
-        required:true
-    },
     timestamp: { 
         type: Date, 
         default: Date.now, 

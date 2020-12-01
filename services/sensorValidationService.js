@@ -3,7 +3,8 @@ const {
     validateTemperature,
     validateTemperatureWithLastEntry,
 } = require("../services/entryvalidateService");
-const fault_codes = require('../utils/constants')
+const fault_codes = require('../utils/constants');
+const sensorCachingService = require('./sensorCachingService');
 /**
  * Acknowledges a faulty entry and returns false if the associated sensor should be considered faulty otherwise true
  * @param {{loc_x: number, loc_y: number, floor: number}} measurement the measuremnt that is considered falses
@@ -11,10 +12,6 @@ const fault_codes = require('../utils/constants')
  */
 async function reportFaultyMeasurement(measurement){
     let entries = await getSensorEntries(measurement, '-5m', '0m')
-    // let tempEntries = await getSensorEntries(measurement, '-1m', '0m')
-    // tempEntries = tempEntries.find(entry => entry._field = 'temperature')
-    // console.log(tempEntries)
-
     let counter = { true: 0, false: 0} 
     entries.forEach(entry => counter[entry.is_valid]++)
          
@@ -47,32 +44,16 @@ function IsServerUpFor5Minutes(){ return process.uptime() > 5 * 60 * 1e+9}
  * @returns {Sensor Object} based on fault
  */
 function reasonForFaulty(entry,counter) {
-    oldTemp = 0
     if (entry.parameter == 'temperature') {
         if (validateTemperature(entry) == false) {
             entry.fault_code = fault_codes.temp_out_of_range
-           var values = {
-               old_value: parseInt(oldTemp),
-               new_value: parseInt(entry.value)
-           }
-            entry.fault_value = values
             return entry
         } else if (validateTemperatureWithLastEntry(entry) == false) {
             entry.fault_code = fault_codes.temp_difference_more_than_2
-            var values = {
-                old_value: parseInt(oldTemp),
-                new_value: parseInt(entry.value)
-            }
-            entry.fault_value = values 
             return entry
         }
         else if (notEnoughValidEntries(counter)) {
             entry.fault_code = fault_codes.not_enough_valid_entries
-            var values = {
-                old_value: parseInt(oldTemp),
-                new_value: parseInt(entry.value)
-            }
-            entry.fault_value = values
             return entry
         }
     }
