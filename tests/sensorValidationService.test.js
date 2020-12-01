@@ -127,7 +127,7 @@ describe('Tests when uptime of server is > 5min', () => {
     })
 })
 
-test('test fault code for temperature > 45',() => {
+test('test fault code for temperature < 8',() => {
 
     let counter = {
         true: 19,
@@ -146,7 +146,7 @@ test('test fault code for temperature > 45',() => {
         expect(entry.fault_code).toEqual('ERROR_TEMPERATURE_OUT_OF_RANGE')
     })
 
-    test('test fault code for temperature < 15', () => {
+    test('test fault code for temperature > 45', () => {
 let counter = {
     true: 19,
     false: 0
