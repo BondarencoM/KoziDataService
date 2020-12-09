@@ -6,7 +6,7 @@
  */
 
 const mongoose = require('mongoose');
-const SensorFault = require('../models/SensortFault');
+const SensorFault = require('../models/SensorFault');
 
 const {MONGO_USERNAME, MONGO_PASSWORD, MONGO_DB, MONGO_URL} = process.env
 

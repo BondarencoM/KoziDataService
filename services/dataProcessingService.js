@@ -1,6 +1,7 @@
 const measurementsDb = require('./influxDbPersistanceService')
 const persistantDb = require('./mongoPersistanceService')
 
+
 const validationService = require('./entryvalidateService')
 const cacheService = require('./sensorCachingService')
 const sensorValidationService = require('./sensorValidationService')
@@ -10,7 +11,7 @@ async function processSensorMessage(topic, message){
     // humtemp/<floor>/<loc_x>/<loc_y>/sensor/[humidity|temperature]/state
     // using named capturing groups
     let match = /^humtemp\/(?<floor>\d+)\/(?<loc_x>\d+)\/(?<loc_y>\d+)\/sensor\/(?<parameter>humidity|temperature)\/state$/gm.exec(topic)
-
+    
     // return if we have a topic with a different format
     if(!match) return
 

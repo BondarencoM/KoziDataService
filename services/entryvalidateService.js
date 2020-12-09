@@ -64,5 +64,5 @@ function validateTemperatureWithLastEntry(entry) {
 module.exports = {
     validateTemperature,
     validateTemperatureWithLastEntry,
-    validateEntry
+    validateEntry,
 }
