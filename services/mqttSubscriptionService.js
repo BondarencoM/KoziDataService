@@ -21,7 +21,7 @@ var options = {
 }
 
 
-var client  = mqtt.connect(options)
+var client = mqtt.connect(options)
 
 client.on('connect', function () {
     client.subscribe('#')
@@ -30,18 +30,18 @@ client.on('connect', function () {
 })
 
 client.on('offline', function () {
-  console.log('Offline')
-});
+    console.log('Offline')
+})
 
 client.on('error', function (err) {
-    console.log(err);
-});
+    console.log(err)
+})
 
-function onAnyMQTTMessage(handler){
+function onAnyMQTTMessage(handler) {
     client.on('message', (topic, message) => {
         console.log('Received message: ' + topic + ' ' + message.toString())
         handler(topic, message.toString())
     })
 }
 
-module.exports = {onAnyMQTTMessage}
+module.exports = { onAnyMQTTMessage }
